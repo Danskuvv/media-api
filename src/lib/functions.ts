@@ -1,5 +1,4 @@
-/* eslint-disable node/no-unpublished-import */
-import {ErrorResponse} from '../../../hybrid-types/MessageTypes';
+import {ErrorResponse} from '../../hybrid-types/MessageTypes';
 
 const fetchData = async <T>(
   url: string,
