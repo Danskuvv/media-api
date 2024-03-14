@@ -1,13 +1,13 @@
 // likeController.ts
 import {Request, Response, NextFunction} from 'express';
-import {Like} from '@sharedTypes/DBTypes';
+import {Like} from '../../../hybrid-types/DBTypes';
 import {
   postLike,
   deleteLike,
   getCountByMediaId,
   getUserLike,
 } from '../models/likeModel';
-import {LikeResponse} from '@sharedTypes/MessageTypes';
+import {LikeResponse} from '../../../hybrid-types/MessageTypes';
 
 const likePost = async (
   req: Request<{}, {}, {media_id: number}>,

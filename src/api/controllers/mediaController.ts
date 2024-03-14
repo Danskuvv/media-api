@@ -8,8 +8,11 @@ import {
   putMedia,
 } from '../models/mediaModel';
 import CustomError from '../../classes/CustomError';
-import {MediaResponse, MessageResponse} from '@sharedTypes/MessageTypes';
-import {MediaItem, TokenContent} from '@sharedTypes/DBTypes';
+import {
+  MediaResponse,
+  MessageResponse,
+} from '../../../hybrid-types/MessageTypes';
+import {MediaItem, TokenContent} from '../../../hybrid-types/DBTypes';
 
 const mediaListGet = async (
   req: Request,

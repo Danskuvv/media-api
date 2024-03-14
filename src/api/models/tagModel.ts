@@ -1,8 +1,7 @@
 import {ResultSetHeader, RowDataPacket} from 'mysql2';
-import {TagResult} from '@sharedTypes/DBTypes';
+import {TagResult} from '../../../hybrid-types/DBTypes';
 import promisePool from '../../lib/db';
-import {fetchData} from '../../lib/functions';
-import {MessageResponse} from '@sharedTypes/MessageTypes';
+import {MessageResponse} from '../../../hybrid-types/MessageTypes';
 
 // Request a list of tags
 const fetchAllTags = async (): Promise<TagResult[] | null> => {

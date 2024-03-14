@@ -1,6 +1,6 @@
 // likeModel.ts
 import {RowDataPacket} from 'mysql2';
-import {Like} from '@sharedTypes/DBTypes';
+import {Like} from '../../../hybrid-types/DBTypes';
 import promisePool from '../../lib/db';
 
 const postLike = async (media_id: number, user_id: number): Promise<Like> => {

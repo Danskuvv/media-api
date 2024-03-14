@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction} from 'express';
-import {Comment} from '@sharedTypes/DBTypes';
+import {Comment} from '../../../hybrid-types/DBTypes';
 import {postComment, getCommentsByMediaId} from '../models/commentModel';
-import {CommentResponse} from '@sharedTypes/MessageTypes';
+import {CommentResponse} from '../../../hybrid-types/MessageTypes';
 
 const commentPost = async (
   req: Request<{}, {}, {comment_text: string; media_id: number}>,

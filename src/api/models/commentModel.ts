@@ -1,5 +1,5 @@
 import {RowDataPacket} from 'mysql2';
-import {Comment} from '@sharedTypes/DBTypes';
+import {Comment} from '../../../hybrid-types/DBTypes';
 import promisePool from '../../lib/db';
 
 const postComment = async (

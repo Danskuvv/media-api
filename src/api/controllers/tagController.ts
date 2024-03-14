@@ -7,8 +7,8 @@ import {
   postTag,
 } from '../models/tagModel';
 import CustomError from '../../classes/CustomError';
-import {MessageResponse} from '@sharedTypes/MessageTypes';
-import {TagResult} from '@sharedTypes/DBTypes';
+import {MessageResponse} from '../../../hybrid-types/MessageTypes';
+import {TagResult} from '../../../hybrid-types/DBTypes';
 
 // list of tags
 const tagListGet = async (
