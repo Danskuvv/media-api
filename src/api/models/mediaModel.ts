@@ -40,7 +40,7 @@ const fetchAllMediaByAppId = async (
       `SELECT *,
       CONCAT(?, filename) AS filename,
       CONCAT(?, CONCAT(filename, "-thumb.png")) AS thumbnail
-      FROM MediaItems
+      FROM mediaitems
       WHERE app_id = ?`,
       [uploadPath, uploadPath, id]
     );
@@ -69,7 +69,7 @@ const fetchMediaById = async (id: number): Promise<MediaItem | null> => {
     const sql = `SELECT *,
                 CONCAT(?, filename) AS filename,
                 CONCAT(?, CONCAT(filename, "-thumb.png")) AS thumbnail
-                FROM MediaItems
+                FROM mediaitems
                 WHERE media_id=?`;
     const params = [uploadPath, uploadPath, id];
     const [rows] = await promisePool.execute<RowDataPacket[] & MediaItem[]>(
@@ -97,14 +97,14 @@ const postMedia = async (
   media: Omit<MediaItem, 'media_id' | 'created_at'>
 ): Promise<MediaItem | null> => {
   const {user_id, filename, filesize, media_type, title, description} = media;
-  const sql = `INSERT INTO MediaItems (user_id, filename, filesize, media_type, title, description)
+  const sql = `INSERT INTO mediaitems (user_id, filename, filesize, media_type, title, description)
                VALUES (?, ?, ?, ?, ?, ?)`;
   const params = [user_id, filename, filesize, media_type, title, description];
   try {
     const result = await promisePool.execute<ResultSetHeader>(sql, params);
     console.log('result', result);
     const [rows] = await promisePool.execute<RowDataPacket[] & MediaItem[]>(
-      'SELECT * FROM MediaItems WHERE media_id = ?',
+      'SELECT * FROM mediaitems WHERE media_id = ?',
       [result[0].insertId]
     );
     if (rows.length === 0) {
@@ -132,12 +132,12 @@ const putMedia = async (
 ): Promise<MediaItem | null> => {
   try {
     const sql = promisePool.format(
-      'UPDATE MediaItems SET ? WHERE media_id = ?',
+      'UPDATE mediaitems SET ? WHERE media_id = ?',
       [media, id]
     );
     await promisePool.execute<ResultSetHeader>(sql);
     const [rows] = await promisePool.execute<RowDataPacket[] & MediaItem[]>(
-      'SELECT * FROM MediaItems WHERE media_id = ?',
+      'SELECT * FROM mediaitems WHERE media_id = ?',
       [id]
     );
     if (rows.length === 0) {
@@ -189,15 +189,15 @@ const deleteMedia = async (
   try {
     await connection.beginTransaction();
 
-    await connection.execute('DELETE FROM Likes WHERE media_id = ?;', [id]);
+    await connection.execute('DELETE FROM likes WHERE media_id = ?;', [id]);
 
-    await connection.execute('DELETE FROM Comments WHERE media_id = ?;', [id]);
+    await connection.execute('DELETE FROM comments WHERE media_id = ?;', [id]);
 
-    await connection.execute('DELETE FROM Ratings WHERE media_id = ?;', [id]);
+    await connection.execute('DELETE FROM ratings WHERE media_id = ?;', [id]);
 
     // ! user_id in SQL so that only the owner of the media item can delete it
     const [result] = await connection.execute<ResultSetHeader>(
-      'DELETE FROM MediaItems WHERE media_id = ? and user_id = ?;',
+      'DELETE FROM mediaitems WHERE media_id = ? and user_id = ?;',
       [id, user.user_id]
     );
 
