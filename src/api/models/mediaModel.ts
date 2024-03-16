@@ -18,7 +18,7 @@ const fetchAllMedia = async (): Promise<MediaItem[] | null> => {
       `SELECT *,
       CONCAT(?, filename) AS filename,
       CONCAT(?, CONCAT(filename, "-thumb.png")) AS thumbnail
-      FROM MediaItems`,
+      FROM mediaitems`,
       [uploadPath, uploadPath]
     );
     if (rows.length === 0) {
