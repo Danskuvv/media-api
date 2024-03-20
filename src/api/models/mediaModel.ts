@@ -16,10 +16,9 @@ const fetchAllMedia = async (): Promise<MediaItem[] | null> => {
   try {
     const [rows] = await promisePool.execute<RowDataPacket[] & MediaItem[]>(
       `SELECT *,
-      CONCAT(?, filename) AS filename,
-      CONCAT(?, CONCAT(filename, "-thumb.png")) AS thumbnail
+      CONCAT(?, filename) AS filename
       FROM mediaitems`,
-      [uploadPath, uploadPath]
+      [uploadPath]
     );
     if (rows.length === 0) {
       return null;
@@ -183,6 +182,7 @@ const deleteMedia = async (
   );
 
   console.log(token);
+  console.log(media.filename);
 
   const connection = await promisePool.getConnection();
 
@@ -213,6 +213,7 @@ const deleteMedia = async (
       },
     };
 
+    console.log(media.filename);
     const deleteResult = await fetchData<MessageResponse>(
       `${process.env.UPLOAD_SERVER}/delete/${media.filename}`,
       options
